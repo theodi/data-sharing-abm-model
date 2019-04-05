@@ -1,0 +1,95 @@
+general_dict:
+    n_ticks: 12  # number of ticks in the simulation
+    n_consumers: 750  # number of consumers in the simulation
+    n_init_big_firms: 4  # number of big firms at the start of the simulation
+    n_init_firms: 6  # total number of firms at the start of the simulation
+    birth_lambda: 0.2  # mean number of firms that enter the simulation at every tick
+    no_money_ticks_before_death: 5  # how many ticks can a firm be below the capital cutoff before it leaves the simulation
+    no_usage_ticks_before_death: 5  # how many ticks can a firm have no customers before it leaves the simulation
+
+seed_dict:
+    overall_seed: 3684848379  # seed for rng
+    need_seed: 10  # seed for need_rng
+    data_seed: 90  # seed for data_rng
+    privacy_seed: 95732 # seed for the privacy scores
+    scenario_seed: 269 # seed for the scenario
+
+capital_dict:
+    big: 200 # start capital of big firms
+    small: 100 # start capital of all other firms
+    capital_cutoff: 10 # if firms can't keep their capital above this cutoff, they will die
+
+util_weight_dict:
+    w_priv: 1 # weight on the privacy component
+    w_logit: 1 # exponential factor on the utility when calculating probabilities
+    w_qual: 1 # weight on the quality component
+    w_loyal_firm: 0.1 # weight on the loyalty wrt firms (includes all categories)
+    w_loyal_category: 0.3 #w weight on the loyalty to firm (just within the category)
+
+needs_dict:
+    hyper_mode: uniform # modes of the beta functions are drawn from this distribution
+    hyper_var: uniform # modes of the var functions are drawn from this distribution
+    needs_range_mode_low: 0  # ranges
+    needs_range_mode_high: 1
+    needs_range_var_low: 0.001
+    needs_range_var_high: 0.01
+    n_modes_probs: # probability distribution of how many beta functions will constitute a need profile
+      - 0 # 0 beta distributions
+      - 0.2 # 1 beta distribution
+      - 0.7 # etc
+      - 0.1
+
+innovation_dict:
+    new_firm_new_category_prob: 0.7 # probability that a new firm goes into a non-existent category
+    alpha_f: 1 # parameter for the quality update function for existing products
+    w_num_firms_per_cat: 1 # weight on the number of firms in a category when deciding which product to improve
+    w_usage: 1 # weight on the usage when deciding which product to improve
+    w_mean_usage: 0.5 # weight on the mean usage of a category when deciding to enter an existing category
+    w_datatype: 5 # weight on the overlap of datatypes when deciding to enter a new category
+    qual_diff_param: 1 # when entering a new category, don't let the quality deviate from the highest quality in the category by this amount
+    invest_cap: 30 # how much capital can maximally be invested
+    investment_profile: # probability on type of investment a firm will do
+        existing_product: 0.6
+        new_product: 0.35
+        new_category: 0.05
+    success_invest_low: 0.05 # range of probabilities of succeeding in investing in non-existing product
+    success_invest_high: 0.4
+    new_product_scaler_alpha: 0.00001 # scaling factor for
+
+openness_dict:
+    openness_lower: 0.5 # lower range of the data sharing probability
+    openness_upper: 1 # upper range of the data sharing probability
+    cartel: False # whether there is a cartel or not
+
+data_dict:
+    n_data_types_init: 5 # number of data types for initial products
+    n_data_types_total: 20 # total number of data types in the simulation
+    data_worth_exp: 1 # exponent on how data decays
+    growth_factor: 10 # governs at which rate datatypes enter into new categories
+    data_cutoff: 100 # maximal investment in data
+    data_skill_distr: uniform # how data skills are distributed
+    data_skill_range_low: 0
+    data_skill_range_high: 1
+
+category_dict:
+    n_init_categories: 4 # number of categories at the start of the simulation
+    n_total_categories: 50 # maximal number of categories in the simulation
+
+usage_dict:
+    alpha_usage_decay: 1 # exponent for the decay of data over time
+
+port_dict:
+    n_port: 4 # after how many consecutive in one category with one firm usages do users port their data to that firm
+
+privacy_dict:
+    mean_cons_concern: 0.5 # mean consumer privacy concern
+    var_cons_concern: 0.06 # variance of consumer privacy concern
+    mean_firm_score: 0.9 # mean of firm privacy score
+    var_firm_score: 0.04 # variance of firm privacy score
+
+scenario_dict:
+    scen_tick: 60 # when does the privacy shock happen
+    scen_number_of_firms: 4  # hit this number of firms starting with the biggest in capital
+    firm_hit: 0.4  # hit in privacy score
+    consumer_hit_mean: 0.4 # hit in consumer privacy concern - mean
+    consumer_hit_var: 0.05 # hit in consumer privacy concern - variance
