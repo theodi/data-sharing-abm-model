@@ -66,7 +66,6 @@ data_dict:
     n_data_types_total: 20 # total number of data types in the simulation
     data_worth_exp: 1 # exponent on how data decays
     growth_factor: 10 # governs at which rate datatypes enter into new categories
-    data_cutoff: 100 # maximal investment in data
     data_skill_distr: uniform # how data skills are distributed
     data_skill_range_low: 0
     data_skill_range_high: 1
