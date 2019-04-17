@@ -48,4 +48,4 @@ Currently, the output is visualised a set of figures, but users can change that 
 
 In order to use conda environments, install [Miniconda](https://conda.io/miniconda.html) or Anaconda if you don't have it yet.
 
-There are two environments: `odi` and `odi-app`, the details of which are in yaml files (`environment_simulation.yaml` and `environment_app.py`). To install, use `conda env create -f /path/to/environment_xxx.yaml` with the correct path and filename.
+To create the correct environment to run the app locally, use `conda env create -f /path/to/environment_simulation.yaml`. This will create an environment named `odi`.  
