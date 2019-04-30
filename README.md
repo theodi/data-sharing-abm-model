@@ -5,6 +5,8 @@ Agent Based Model looking at the effect of openness on data sharing and innovati
 
 You can find a full description of the model in the `model_document` folder.
 
+To create the `pdf` from the `md`, you can use pandoc: `pandoc model_document.md -f markdown --pdf-engine=xelatex -o model_document.pdf`
+
 ## Accompanying demo
 
 A Dash app is available on [data-sharing-abm-demo](https://github.com/theodi/data-sharing-abm-demo). This app allows you to explore the model without having to run it yourself.

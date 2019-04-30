@@ -2,11 +2,11 @@
 
 The aim of the project was to explore how ABMs are built collaboratively, how they can be used to enhance understanding of complex processes and how they can be used to support policy decisions.
 We set out to build an ABM of the data economy.
-We initially built a basic ABM in which consumers had to choose between different firms delivering one product, all in the same category (e.g. search engines, e-mail services, ...). The consumer choice was based on the quality of the product offered by each of the firms, the privacy score of the firms and the privacy concern of the individual consumers. We added a data portability component, which would allow users to port there data from one firm to another (and make certain firms more attractive because of the ability to port).
+We initially built a basic ABM in which consumers had to choose between different firms delivering one product, all in the same category (e.g. search engines, e-mail services). The consumer choice was based on the quality of the product offered by each of the firms, the privacy score of the firms and the privacy concern of the individual consumers. We added a data portability component, which would allow users to port their data from one firm to another (and make certain firms more attractive because of the ability to port).
 
 After consultation, we decided to expand the model
 
-* to include multiple product categories, which collect different types of data about consumers; companies have products in one or more categories
+* to include multiple product categories, which collect different types of data about consumers; and companies that have products in one or more categories
 * to include birth and death of firms
 * to allow for the development of new categories
 * to gauge the effect of openness of data sharing on innovation
@@ -33,14 +33,14 @@ Consumers have the following attributes:
 
 ### Firms
 
-* Products and their quality: firms produce maximal one product in each category. Each product has a certain quality which evolves throughout the simulation. See below for details on how firms break into categories they don't have a product in yet, and how quality is assigned.
+* Products and their quality: firms produce maximally one product in each category. Each product has a certain quality which evolves throughout the simulation. See below for details on how firms break into categories they don't have a product in yet, and how quality is assigned.
 * Capital: the starting capital can be one of two user-supplied values, depending on whether the firm is big or small. Firms created during the simulation get the small starting capital. Capital is gained when consumers use the firm's products, and spend on innovation.
 * Privacy score: a number between 0 and 1, with 0 being bad and 1 being good. This is drawn from a capped normal distribution for which the user can provide mean and variance.
-* Big/small firms: at the initialisation of the model, the user can specify how many of the initial firms are big firms. Big firms start off with a higher capital. Additionally, the quality of their product is initialised at 2, rather than 1. We also make sure that the categories in which the big firms are active are high need-categories to avoid the infelicity of being a big firm by having a product little consumers need/use.
+* Big and small firms: at the initialisation of the model, the user can specify how many of the initial firms are big firms. Big firms start off with higher capital. Additionally, the quality of their product is initialised at 2, rather than 1. We also make sure that the categories in which the big firms are active are higher-need categories to avoid the infelicity of being a big firm by having a product little consumers need/use.
 * Firm investment profile: the distribution of how often firms will try to innovate by
   - increasing the quality of an existing product
   - trying to launch a product in an existing category
-  - trying to launch a product in a non-existing category.
+  - trying to launch a product in a non-existing category
 
 In the current implementation, all firms have the same firm investment profile, however, in a future version of the model this could be varied. See below for more details on innovation.
 
@@ -51,10 +51,10 @@ Products are what bind the two types of agents: consumers buy products in certai
 
 A product category is defined by:
 
-* the data types that are associated with it (e.g. verbal messages, pictures, playlists, search terms, ...)
+* the data types associated with it (e.g. verbal messages, pictures, playlists, search terms, ...)
 * the need for products in a category.
 
-During the setup of the simulation, we define a limited number of categories and assign some of these to the initial number of firms in the simulation. They are associated with a limited number of data types.  During the simulation, new firms will crop up, in new or existing categories.
+During the setup of the simulation, we define a limited number of categories and assign some of these to the initial number of firms in the simulation. They are associated with a limited number of data types.  During the simulation, new firms will arise, in new or existing categories.
 
 ### Data types
 
@@ -171,7 +171,7 @@ The probabilities for each of these to happen are encoded in the firm innovation
 The investment is calculated based on two factors: capital and data. Each firm invests as much capital as possible, and there is a user-defined maximum to the capital that can be invested. Denote the capital to be invested as $C$.
 
 #### Investing in an existing product
-A firm that has multiple products has to choose which one it wishes to invest in. To do so, we calculate a utility for each of their products, which is the weighted sum of how many firms are active in the category and what the overall usage in each category was in the last tick; i.e., firms invests in popular categories with high competition. The user can determine the weights (`w_num_firms_per_cat` and `w_usage`), but they are the same for all firms. The utilities are exponentiated and normalised per firm to sum to one; we then pick a category for each company based on these distributions.
+A firm that has multiple products has to choose which one it wishes to invest in. To do so, we calculate a utility for each of their products, which is the weighted sum of how many firms are active in the category and what the overall usage in each category was in the last tick; i.e., firms invest in popular categories with high competition. The user can determine the weights (`w_num_firms_per_cat` and `w_usage`), but they are the same for all firms. The utilities are exponentiated and normalised per firm to sum to one; we then pick a category for each company based on these distributions.
 
 Next, we calculate how much data within each firm is available that is relevant to their chosen category, i.e., how much data of the types that are used in the category is available (even if it originated from a different category). Different firms have different skill at combining data, which increases the raw value of the data if the chosen category requires two or more datatypes:
 
@@ -225,10 +225,10 @@ Similar to investing in a new product in an existing category, except that the m
 
 ### Requesting access to data
 
-At every tick, a company can request one 'data right' from another company. This data right is limited to one product (category) on either side of the deal (e.g. Facebook asking Google to be able to import the gmail address book into instagram).
-A matrix $R$ of dimensions (firm, category, firm, category, datatype) keeps track of which datatype is _in principle_ requestable between companies/products. $R$ is set up such that firms will never request data from themselves, and such that requests for a category are only for datatypes that are relevant to that category. If there is a data cartel (see below), this is also incorporated into the definition of $R$.
+At every tick, a company can request one 'data right' from another company. This data right is limited to one product (category) on either side of the deal (e.g. Facebook asking Google to be able to import a Gmail address book into Instagram).
+A matrix $R$ of dimensions (firm, category, firm, category, datatype) keeps track of which datatype is _in principle_ requestable between companies and products. $R$ is set-up such that firms will never request data from themselves, and that requests for a category are only for datatypes that are relevant to that category. If there is a data cartel (see below), this is also incorporated into the definition of $R$.
 
-During the simulation, we update $R$ such that only one request can only be (independently of whether it has been granted or denied). Furthermore, when a firm leaves the simulation, $R$ is adjusted to reflect this.
+During the simulation, we update $R$ such that only one request can be made (independently of whether it has been granted or denied). Furthermore, when a firm leaves the simulation, $R$ is adjusted to reflect this.
 
 1. Mask $R$ to figure out which requests can be made now, based on the categories firms are active in.
 2. Based on what is requestable now, each firm picks a datatype to request
@@ -252,7 +252,7 @@ The values $a, b$ above are set by the user through the parameters `openness_low
 
 Granted data requests are entered into the portability matrix.
 
-### Data transfers
+### Data porting
 
 The decision to port data between products of different firms lies with the consumers. We have implemented a simple rule, which we encourage future users to enhance: as soon as a consumer has used a product 4 times without using another product in that category, they port all data that is portable from other firms to that product.
 
@@ -337,7 +337,7 @@ Currently, the output is visualised a set of figures, but users can change that 
 ## Relevant files for the model
 
 * `simulation.py`: has the main function `run` to run the model
-* `setup_sim.py`: sets up categories, needs, capital, privacy score, privacy concern, porting, ...
+* `setup_sim.py`: sets up categories, needs, capital, privacy score, privacy concern, porting
 * `needs.py`: wraps the functions used to draw from need profiles
 * `beta_distr`: functions that derive the parameters $\alpha, \beta$ for the beta distribution based on the mode and variance provided by the user
 * `data_handling.py`: mostly implemented in numba for speed gains, this module deals with data requests and porting data
